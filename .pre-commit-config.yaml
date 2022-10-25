@@ -7,6 +7,7 @@ repos:
     -   id: trailing-whitespace
     -   id: no-commit-to-branch
         name: "Check if commit is not directly to main branch"
+        default_stages: [push]
 -   repo: https://github.com/psf/black
     rev: 22.10.0
     hooks:
