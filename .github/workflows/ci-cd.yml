@@ -1,4 +1,4 @@
-name: build
+name: ci-cd
 
 on:
   push:
@@ -45,3 +45,17 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             sudo docker pull websoftdevs/musicbot:prod
+  release:
+    name: release
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOSTNAME }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            sudo docker run --name musicbot2 websoftdevs/musicbot:prod -d
