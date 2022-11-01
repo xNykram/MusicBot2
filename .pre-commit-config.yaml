@@ -5,7 +5,6 @@ repos:
     -   id: check-added-large-files
     -   id: end-of-file-fixer
     -   id: trailing-whitespace
-    -   id: no-commit-to-branch
         name: "Check if commit is not directly to main branch"
         default_stages: [push]
 -   repo: https://github.com/psf/black
@@ -25,4 +24,7 @@ repos:
         [
           "-rn", # Only display messages
           "-sn", # Don't display the score
+          "-d C0114", # Silence documentation warnings
+          "-d C0115",
+          "-d C0116",
         ]
