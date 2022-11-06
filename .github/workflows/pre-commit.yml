@@ -10,5 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-python@v3
+    - run: pip3 install -U pip setuptools
+    - run: pip3 install -U -r requirements.txt
+    - run: pylint --rcfile=.pylintrc src/
     - uses: pre-commit/action@v3.0.0
-    - run: pip install -U -r requirements.txt
