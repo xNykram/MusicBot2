@@ -58,4 +58,4 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            sudo docker run websoftdevs/musicbot:prod
+            cd musicbot2 && sudo docker-compose -f docker-compose-prod.yml up -d

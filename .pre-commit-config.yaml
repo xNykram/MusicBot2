@@ -27,4 +27,5 @@ repos:
           "-d C0114", # Silence documentation warnings
           "-d C0115",
           "-d C0116",
+          "-d W0106", # Silence unassigned expression
         ]

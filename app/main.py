@@ -1,8 +1,7 @@
 import os
-
-from discord.ext import commands
 import logging
 from os import listdir
+from discord.ext import commands
 
 
 class Client(commands.Bot):
@@ -10,14 +9,18 @@ class Client(commands.Bot):
         super().__init__(*args, **kwargs)
 
 
-client = Client(command_prefix=commands.when_mentioned_or(os.environ.get('PREFIX')), case_insensitive=True)
+client = Client(
+    command_prefix=commands.when_mentioned_or(os.environ.get("PREFIX")),
+    case_insensitive=True,
+)
 
 
 @client.event
 async def on_ready():
     logging.warning("Bot started!")
 
+
 for cmd in listdir("commands"):
     client.load_extension(f"commands.{cmd[:-3]}") if cmd.endswith(".py") else None
 
-client.run(os.environ.get('BOT_TOKEN'))
+client.run(os.environ.get("BOT_TOKEN"))
