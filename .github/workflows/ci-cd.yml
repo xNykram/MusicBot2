@@ -46,18 +46,7 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             sudo docker pull websoftdevs/musicbot:prod
-
-  create-envfile:
-    runs-on: ubuntu-18.04
-    steps:
-      - name: Make envfile
-        uses: SpicyPizza/create-envfile@v1.3
-        with:
-          envkey_BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-          envkey_PREFIX: ${{ secrets.PREFIX }}
-          directory: musicbot2
-          file_name: .env
-          fail_on_empty: false
+            sudo echo -e 'BOT_TOKEN=${{ secrets.BOT_TOKEN }}\nPREFIX=${{ secrets.PREFIX }}' | sudo tee musicbot2/.env
 
   release:
     name: release
