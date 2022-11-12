@@ -10,6 +10,9 @@ services:
     ports:
       - "8995:8995"
     container_name: musicbot
+    depends_on:
+      - db
+
   db:
     image: postgres
     restart: always
