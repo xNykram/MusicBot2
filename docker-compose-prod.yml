@@ -10,3 +10,4 @@ services:
     ports:
       - "8001:8001"
     container_name: musicbot2
+    network_mode: musicbot

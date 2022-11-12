@@ -25,7 +25,11 @@ repos:
           "-rn", # Only display messages
           "-sn", # Don't display the score
           "-d C0114", # Silence documentation warnings
-          "-d C0115",
-          "-d C0116",
+          "-d C0115", # ?
+          "-d C0116", # ?
+          "-d C0209", # Silence consider-using-f-string
           "-d W0106", # Silence unassigned expression
+          "-d E0213", # Silence no-self-argument
+          "-d W0511", # Silence to do comments
+          "-d R0903", # Silence too-few-public-methods
         ]
