@@ -31,6 +31,7 @@ jobs:
           context: .
           push: true
           tags: websoftdevs/musicbot:prod
+
   deploy:
     name: deploy
     needs: build
@@ -45,6 +46,8 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             sudo docker pull websoftdevs/musicbot:prod
+            sudo echo -e 'BOT_TOKEN=${{ secrets.BOT_TOKEN }}\nPREFIX=${{ secrets.PREFIX }}' | sudo tee musicbot2/.env
+
   release:
     name: release
     needs: deploy
