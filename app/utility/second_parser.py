@@ -14,3 +14,4 @@ def parse_duration(sec: int) -> str:
     if result == days or hours or minutes or seconds or days and not hours or days and not minutes and days and not seconds or hours and not minutes or hours and not seconds or minutes and not seconds:
         return result [:-1]
     return result
+    

@@ -17,3 +17,4 @@ def test_of_convertion():
 def test_seconds_raises():
     with pytest.raises(ValueError):
         second_parser.parse_duration(-5)
+        
