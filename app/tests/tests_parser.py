@@ -1,7 +1,6 @@
 import pytest
 from app.utility.second_parser import parse_duration
 
-
 def test_of_convertion():
     assert parse_duration(0) == "0s"
     assert parse_duration(1) == "1s"
