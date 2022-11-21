@@ -1,7 +1,9 @@
 version: '3'
 services:
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: development/local/Dockerfile
     volumes:
       - ./app:/app/app
     command: ["python3", "main.py"]
@@ -23,3 +25,13 @@ services:
       POSTGRES_DB: discordbot
     ports:
       - "5432:5432"
+
+  pytest:
+    build:
+      context: .
+      dockerfile: development/local/pytest/Dockerfile
+    container_name: pytest
+    env_file:
+      - .env
+    volumes:
+      - ./coverage:/app/coverage
