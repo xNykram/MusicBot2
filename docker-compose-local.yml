@@ -16,7 +16,7 @@ services:
       - db
 
   db:
-    image: postgres
+    image: postgres:local
     restart: always
     container_name: sql1
     environment:
@@ -25,13 +25,3 @@ services:
       POSTGRES_DB: discordbot
     ports:
       - "5432:5432"
-
-  pytest:
-    build:
-      context: .
-      dockerfile: development/local/pytest/Dockerfile
-    container_name: pytest
-    env_file:
-      - .env
-    volumes:
-      - ./coverage:/app/coverage
