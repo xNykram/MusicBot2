@@ -4,3 +4,4 @@ pylint==2.15.5
 pytest==7.2.0
 sqlalchemy==1.4.44
 pytest-cov==4.0.0
+pydantic==1.10.2
