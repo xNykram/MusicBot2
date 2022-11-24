@@ -16,7 +16,7 @@ services:
       - db
 
   db:
-    image: postgres:local
+    image: postgres
     restart: always
     container_name: sql1
     environment:
