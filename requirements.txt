@@ -1,7 +1,8 @@
-discord.py==1.7.3
+discord.py==2.1.0
 pre-commit==2.20.0
 pylint==2.15.5
 pytest==7.2.0
 sqlalchemy==1.4.44
+youtube_search==2.1.2
 pytest-cov==4.0.0
 pydantic==1.10.2

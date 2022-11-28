@@ -3,4 +3,5 @@
 venv
 .pyc
 .ds_store
+__pycache__/
 coverage

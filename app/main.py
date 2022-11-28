@@ -1,26 +1,44 @@
 import os
 import logging
-from os import listdir
+import asyncio
+from sys import stdout
+import discord
 from discord.ext import commands
+from app.api.client import Client
 
 
-class Client(commands.Bot):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+logging.basicConfig(stream=stdout, level=logging.INFO)
+logger = logging.getLogger("main")
+
+
+if os.environ.get("BOT_TOKEN") is None:
+    raise ValueError("BOT_TOKEN environment variable not set")
+BOT_TOKEN = os.environ.get("BOT_TOKEN") or ""
+
+BOT_PREFIX = os.environ.get("PREFIX") or "!"
+INTENTS = discord.Intents.default()
+INTENTS.message_content = True
 
 
 client = Client(
-    command_prefix=commands.when_mentioned_or(os.environ.get("PREFIX")),
+    command_prefix=commands.when_mentioned_or(BOT_PREFIX),
     case_insensitive=True,
+    intents=INTENTS,
 )
 
 
 @client.event
 async def on_ready():
-    logging.warning("Bot started!")
+    logging.info("Loaded prefix: %s", BOT_PREFIX)
+    logging.info("Bot started!")
+    for command in client.commands:
+        logging.info("Loaded command: %s", command.name)
 
 
-for cmd in listdir("commands"):
-    client.load_extension(f"commands.{cmd[:-3]}") if cmd.endswith(".py") else None
+async def main():
+    async with client:
+        await client.start(BOT_TOKEN)
 
-client.run(os.environ.get("BOT_TOKEN"))
+
+if __name__ == "__main__":
+    asyncio.run(main())
