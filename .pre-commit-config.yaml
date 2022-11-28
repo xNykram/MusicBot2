@@ -32,4 +32,5 @@ repos:
           "-d E0213", # Silence no-self-argument
           "-d W0511", # Silence to do comments
           "-d R0903", # Silence too-few-public-methods
+          "-d E0237", # Silence external attribute assignment
         ]
