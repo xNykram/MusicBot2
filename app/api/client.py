@@ -11,9 +11,9 @@ class Client(commands.Bot):
         self.queue_map = {}
 
     async def setup_hook(self):
-        for cmd in listdir("commands"):
+        for cmd in listdir("app/commands"):
             if cmd.endswith(".py") and cmd != "__init__.py":
-                await self.load_extension(f"commands.{cmd[:-3]}")
+                await self.load_extension(f"app.commands.{cmd[:-3]}")
                 self.logger.info("Loaded %s command.", cmd[:-3])
 
     def get_queue(self, guild_id: int) -> list:
