@@ -2,7 +2,10 @@ from logging import Logger
 from ast import literal_eval
 from youtube_search import YoutubeSearch as SearchEngine
 from discord.ext.commands.context import Context
+from app.schemas.song import Song
 from app.main import client
+from app.api.player import Player
+
 
 logger = Logger("play")
 
@@ -19,24 +22,10 @@ def search(query: str) -> dict:
     return literal_eval(str(result[0]))  # Converts str to dict.
 
 
-YDL_OPTS = {
-    "format": "m4a/bestaudio/best",
-    "quiet": True,
-    "audioonly": True,
-    "outtmpl": "-",
-    "postprocessors": [
-        {  # Extract audio using ffmpeg
-            "key": "FFmpegExtractAudio",
-            "preferredcodec": "m4a",
-        }
-    ],
-    "post_hooks": [on_downloaded],
-}
-
-
 @client.command(name="play")
 async def play(ctx: Context, *, query: str):
     """Play a song from YouTube"""
+
     logger.info("Searching for song...")
     result = search(query)
     if result == {}:
@@ -46,20 +35,26 @@ async def play(ctx: Context, *, query: str):
         return await ctx.send("You must be in a guild to use this command.")
 
     queue = client.get_queue(ctx.guild.id)
-    queue.append(
-        {
-            "title": result["title"],
-            "url": f'youtube.com{result["url_suffix"]}',
-            "duration": result["duration"],
-        }
+    current_song = Song(
+        id=len(queue) + 1,
+        name=result["title"],
+        url="https://www.youtube.com" + result["url_suffix"],
+        duration=result["duration"],
     )
-    song = queue.pop()
-    await ctx.send(f"Playing {song['title']} ({song['duration']}) ({song['url']})")
-
-    if ctx.guild.voice_client is None:
-        return
-    # TODO: Connect to VC and play a song from queue.
-    # vc = await ctx.guild.voice_client.connect(timeout=10, reconnect=True)
+    if len(queue) > 0:
+        await ctx.send("Added {} to queue!".format(current_song.name))
+        queue.append(current_song)
+    else:
+        queue.append(current_song)
+        song = queue[-1]
+        await ctx.send(
+            "Playing {} ({}) ({})".format(song.name, song.url, song.duration)
+        )
+        voice_client = await ctx.invoke(client.get_command("join"))
+        player = Player(
+            guild_id=ctx.guild.id, song_url=song.url, voice_connection=voice_client
+        )
+        await player.play_song(voice_client)
 
 
 async def setup(bot):

@@ -1,4 +1,4 @@
-from song import Song
+from app.api.song import Song
 
 
 class Queue:
