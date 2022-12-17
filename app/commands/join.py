@@ -1,22 +1,37 @@
-from app.main import client
+from uuid import uuid4
 from logging import Logger
+from app.main import client
+from app.schemas.connections import Connections
+
 
 logger = Logger("join")
 
-connections = {}
+connections = []
 
 
 @client.command(name="join")
 async def join(ctx):
-    channnel = ctx.message.author.voice
+    channel = ctx.message.author.voice
 
-    if not channnel:
+    if not channel:
         return await ctx.send("You are not on any voice channel.")
-    if ctx.guild.id not in connections:
-        await ctx.guild.change_voice_state(channel=ctx.author.voice.channel)
-        connections.update({ctx.guild.id: ctx.author.voice.channel.id})
-    else:
-        return await ctx.send("I'm already connected to your voice channel.")
+
+    current_connection = [
+        connection for connection in connections if connection.guild_id == ctx.guild.id
+    ]
+    if current_connection:
+        return current_connection[0].voice_client
+    voice_channel = ctx.author.voice.channel
+    voice_client = await voice_channel.connect()
+    connections.append(
+        Connections(
+            id=uuid4(),
+            guild_id=ctx.guild.id,
+            voice_client=voice_client,
+            channel_id=ctx.author.voice.channel.id,
+        )
+    )
+    return voice_client
 
 
 async def setup(bot):

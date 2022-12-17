@@ -1,13 +1,11 @@
-import logging
 from logging import Logger
 from ast import literal_eval
 from youtube_search import YoutubeSearch as SearchEngine
 from discord.ext.commands.context import Context
-from discord import FFmpegPCMAudio, utils
 from app.schemas.song import Song
-from youtube_dl import YoutubeDL
 from app.main import client
 from app.api.player import Player
+
 
 logger = Logger("play")
 
@@ -37,21 +35,26 @@ async def play(ctx: Context, *, query: str):
         return await ctx.send("You must be in a guild to use this command.")
 
     queue = client.get_queue(ctx.guild.id)
-    current_song = Song(id=len(queue) + 1,
-                        name=result["title"],
-                        url="https://www.youtube.com" + result["url_suffix"],
-                        duration=result["duration"])
+    current_song = Song(
+        id=len(queue) + 1,
+        name=result["title"],
+        url="https://www.youtube.com" + result["url_suffix"],
+        duration=result["duration"],
+    )
     if len(queue) > 0:
         await ctx.send("Added {} to queue!".format(current_song.name))
         queue.append(current_song)
     else:
         queue.append(current_song)
-        song = queue.pop()
-        await ctx.send("Playing {} ({}) ({})".format(song.name, song.url, song.duration))
-        voice_channel = ctx.author.voice.channel
-        voice = await voice_channel.connect()
-        player = Player(guild_id=ctx.guild.id, song_url=song.url, voice_connection=voice)
-        player.play_song(voice)
+        song = queue[-1]
+        await ctx.send(
+            "Playing {} ({}) ({})".format(song.name, song.url, song.duration)
+        )
+        voice_client = await ctx.invoke(client.get_command("join"))
+        player = Player(
+            guild_id=ctx.guild.id, song_url=song.url, voice_connection=voice_client
+        )
+        await player.play_song(voice_client)
 
 
 async def setup(bot):
