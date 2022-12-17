@@ -28,7 +28,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: development/local/Dockerfile
+          context: .
           push: true
           tags: websoftdevs/musicbot:prod
 
