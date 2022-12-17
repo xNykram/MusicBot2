@@ -1,12 +1,10 @@
 FROM python:3.11
 
-COPY app /app
-
 WORKDIR /app
 
-COPY requirements.txt .
+COPY /app /app
 
-RUN --mount=type=cache,target=/root/.cache/pip pip install -r requirements.txt
+COPY requirements.txt /app
 
 RUN pip install -r requirements.txt
 
