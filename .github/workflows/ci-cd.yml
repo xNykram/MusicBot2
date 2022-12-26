@@ -20,6 +20,6 @@ jobs:
           script: |
             cd MusicBot2
             sudo git pull
-            sudo echo -e 'BOT_TOKEN=${{ secrets.BOT_TOKEN }}\nPREFIX=${{ secrets.PREFIX }}' | sudo tee musicbot2/.env
+            sudo echo -e 'BOT_TOKEN=${{ secrets.BOT_TOKEN }}\nPREFIX=${{ secrets.PREFIX }}' | sudo tee MusicBot2/.env
             sudo docker build .
             sudo docker-compose -f docker-compose-prod.yml up -d
