@@ -4,7 +4,7 @@ import asyncio
 from sys import stdout
 import discord
 from discord.ext import commands
-from api.client import Client
+from app.api.client import Client
 
 
 logging.basicConfig(stream=stdout, level=logging.INFO)
