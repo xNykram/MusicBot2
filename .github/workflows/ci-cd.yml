@@ -8,7 +8,6 @@ on:
 jobs:
   ci-cd:
     name: ci-cd
-    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: ci-cd
