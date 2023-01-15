@@ -46,7 +46,7 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             sudo docker pull websoftdevs/musicbot:prod
-            sudo echo -e 'BOT_TOKEN=${{ secrets.BOT_TOKEN }}\nPREFIX=${{ secrets.PREFIX }}' | sudo tee Musicbot2/.env
+            sudo echo -e 'BOT_TOKEN=${{ secrets.BOT_TOKEN }}\nPREFIX=${{ secrets.PREFIX }}' | sudo tee MusicBot2/.env
   release:
     name: release
     needs: deploy
@@ -60,4 +60,4 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            cd Musicbot2 && sudo docker compose -f docker-compose-prod.yml up -d
+            cd MusicBot2 && sudo docker compose -f docker-compose-prod.yml up -d
