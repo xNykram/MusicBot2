@@ -25,7 +25,9 @@ def search(query: str) -> dict:
 @client.command(name="play")
 async def play(ctx: Context, *, query: str):
     """Play a song from YouTube"""
-
+    if not ctx.message.author.voice:
+        return await ctx.send("You are not on any voice channel.")
+    voice_client = await ctx.invoke(client.get_command("join"))
     logger.info("Searching for song...")
     result = search(query)
     if result == {}:
@@ -50,7 +52,6 @@ async def play(ctx: Context, *, query: str):
         await ctx.send(
             "Playing {} ({}) ({})".format(song.name, song.url, song.duration)
         )
-        voice_client = await ctx.invoke(client.get_command("join"))
         player = Player(
             guild_id=ctx.guild.id, song_url=song.url, voice_connection=voice_client
         )
