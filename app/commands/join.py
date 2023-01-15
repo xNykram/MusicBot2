@@ -6,12 +6,13 @@ from app.schemas.connections import Connections
 
 logger = Logger("join")
 
-connections = []
+
 
 
 @client.command(name="join")
 async def join(ctx):
     channel = ctx.message.author.voice
+    connections = client.connections
 
     if not channel:
         return await ctx.send("You are not on any voice channel.")

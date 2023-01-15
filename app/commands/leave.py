@@ -1,6 +1,5 @@
 from logging import Logger
 from app.main import client
-from app.commands.join import connections
 
 logger = Logger("leave")
 
@@ -8,6 +7,8 @@ logger = Logger("leave")
 @client.command(name="leave")
 async def leave(ctx):
     channel = ctx.message.author.voice
+    connections = client.connections
+
     if channel:
         current_connection = [
             connection
@@ -15,8 +16,8 @@ async def leave(ctx):
             if connection.guild_id == ctx.guild.id
         ]
         if (
-            current_connection
-            and current_connection[0].channel_id == ctx.author.voice.channel.id
+                current_connection
+                and current_connection[0].channel_id == ctx.author.voice.channel.id
         ):
             client.queue_map.clear()
             voice_client = current_connection[0].voice_client
