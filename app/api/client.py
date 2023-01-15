@@ -9,6 +9,7 @@ class Client(commands.Bot):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.queue_map = {}
+        self.connections = []
 
     async def setup_hook(self):
         for cmd in listdir("app/commands"):
