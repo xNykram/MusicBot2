@@ -6,11 +6,38 @@ on:
       - main
 
 jobs:
-  ci-cd:
-    name: ci-cd
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: ci-cd
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      -
+        name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          push: true
+          tags: websoftdevs/musicbot:prod
+
+  deploy:
+    name: deploy
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: deploy
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOSTNAME }}
@@ -18,7 +45,19 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            cd MusicBot2
-            sudo git pull
-            sudo docker build .
-            sudo docker-compose -f docker-compose-prod.yml up -d
+            sudo docker pull websoftdevs/musicbot:prod
+            sudo echo -e 'BOT_TOKEN=${{ secrets.BOT_TOKEN }}\nPREFIX=${{ secrets.PREFIX }}' | sudo tee Musicbot2/.env
+  release:
+    name: release
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOSTNAME }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd Musicbot2 && sudo docker compose -f docker-compose-prod.yml up -d
