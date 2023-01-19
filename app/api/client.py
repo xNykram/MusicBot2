@@ -12,7 +12,7 @@ class Client(commands.Bot):
         self.connections = []
 
     async def setup_hook(self):
-        for cmd in listdir("app/commands"):
+        for cmd in listdir("/app/app/commands"):
             if cmd.endswith(".py") and cmd != "__init__.py":
                 await self.load_extension(f"app.commands.{cmd[:-3]}")
                 self.logger.info("Loaded %s command.", cmd[:-3])
