@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./app:/app/app
-    command: ["python3", "main.py"]
+    command: ["python3", "app/app/main.py"]
     env_file:
       - .env
     ports:
