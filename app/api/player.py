@@ -2,6 +2,7 @@ import logging
 from discord import VoiceClient, FFmpegPCMAudio
 from youtube_dl import YoutubeDL
 from app.main import client
+from app.schemas.error import ErrorResponse
 
 ydl_options = {"format": "bestaudio", "noplaylist": "True"}
 
@@ -23,12 +24,14 @@ class Player:
     async def play_song(self, voice):
         try:
             song_stream = self.download_song(self.song_url)
+
             voice.play(
                 FFmpegPCMAudio(song_stream["source"], **FFMPEG_OPTIONS),
                 after=lambda _: self.play_next(voice),
             )
         except Exception as key:
             logging.warning(key)
+            return ErrorResponse(type="YTDL", data=str(key))
 
     def play_next(self, voice):
         queue = client.get_queue(self.guild_id)
@@ -46,11 +49,8 @@ class Player:
     @staticmethod
     def download_song(song_url):
         with YoutubeDL(ydl_options) as ydl:
-            try:
-                ydl.cache.remove()
-                info = ydl.extract_info("ytsearch:%s" % song_url, download=False)[
-                    "entries"
-                ][0]
-            except Exception as key:
-                return logging.warning("Failed to download a song: {}".format(str(key)))
+            ydl.cache.remove()
+            info = ydl.extract_info("ytsearch:%s" % song_url, download=False)[
+                "entries"
+            ][0]
         return {"source": info["formats"][0]["url"], "title": info["title"]}
