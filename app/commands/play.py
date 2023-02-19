@@ -5,7 +5,7 @@ from discord.ext.commands.context import Context
 from app.schemas.song import Song
 from app.main import client
 from app.api.player import Player
-
+from app.schemas.error import ErrorResponse
 
 logger = Logger("play")
 
@@ -19,7 +19,7 @@ def search(query: str) -> dict:
     if len(result) == 0:
         return {}
 
-    return literal_eval(str(result[0]))  # Converts str to dict.
+    return literal_eval(str(result[0]))
 
 
 @client.command(name="play")
@@ -55,7 +55,15 @@ async def play(ctx: Context, *, query: str):
         player = Player(
             guild_id=ctx.guild.id, song_url=song.url, voice_connection=voice_client
         )
-        await player.play_song(voice_client)
+        response = await player.play_song(voice_client)
+        if isinstance(response, ErrorResponse):
+            client.queue_map.clear()
+            return await ctx.send(
+                "```Unable to download/play requested song! \nInfo: {}\nAll"
+                " issues please report to the main developer: Nykram```".format(
+                    response.data
+                ).replace("https://", "")
+            )
 
 
 async def setup(bot):
