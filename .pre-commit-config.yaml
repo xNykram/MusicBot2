@@ -36,4 +36,5 @@ repos:
           "-d E0611", # Silence no-name-in-module
           "-d W1202", # Silence lazy formatting for logging
           "-d W0703", # Silence general exception
+          "-d W0613", # Slience unused-argument
         ]
