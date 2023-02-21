@@ -1,8 +1,8 @@
 import logging
 from discord import VoiceClient, FFmpegPCMAudio
-from youtube_dl import YoutubeDL
 from app.main import client
 from app.schemas.error import ErrorResponse
+import yt_dlp
 
 ydl_options = {"format": "bestaudio", "noplaylist": "True"}
 
@@ -10,8 +10,6 @@ FFMPEG_OPTIONS = {
     "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
     "options": "-vn",
 }
-
-ytdl = YoutubeDL(ydl_options)
 
 
 class Player:
@@ -48,9 +46,17 @@ class Player:
 
     @staticmethod
     def download_song(song_url):
-        with YoutubeDL(ydl_options) as ydl:
+        with yt_dlp.YoutubeDL(ydl_options) as ydl:
             ydl.cache.remove()
             info = ydl.extract_info("ytsearch:%s" % song_url, download=False)[
                 "entries"
             ][0]
-        return {"source": info["formats"][0]["url"], "title": info["title"]}
+
+            audio = next(f for f in info["formats"] if (
+                f['acodec'] != 'none' and f['vcodec'] == 'none'))
+
+            if not audio:
+                raise Exception(
+                    f"No audio found for ${info['title']} - ${song_url}")
+
+        return {"source": audio["url"], "title": info["title"]}
