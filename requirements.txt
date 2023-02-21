@@ -7,4 +7,4 @@ youtube_search==2.1.2
 pytest-cov==4.0.0
 pydantic==1.10.2
 discord.py[voice]
-youtube_dl==2021.12.17
+yt-dlp==2023.2.17

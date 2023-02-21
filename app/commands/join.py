@@ -15,6 +15,8 @@ async def join(ctx):
     else:
         await ctx.channel.send("You are not connected to a voice channel.")
 
+    return ctx.guild.voice_client
+
 
 async def setup(bot):
     bot.add_command(join)
