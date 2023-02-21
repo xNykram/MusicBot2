@@ -1,8 +1,9 @@
 import logging
+import yt_dlp
 from discord import VoiceClient, FFmpegPCMAudio
 from app.main import client
 from app.schemas.error import ErrorResponse
-import yt_dlp
+
 
 ydl_options = {"format": "bestaudio", "noplaylist": "True"}
 
@@ -52,11 +53,13 @@ class Player:
                 "entries"
             ][0]
 
-            audio = next(f for f in info["formats"] if (
-                f['acodec'] != 'none' and f['vcodec'] == 'none'))
+            audio = next(
+                f
+                for f in info["formats"]
+                if (f["acodec"] != "none" and f["vcodec"] == "none")
+            )
 
             if not audio:
-                raise Exception(
-                    f"No audio found for ${info['title']} - ${song_url}")
+                raise Exception(f"No audio found for ${info['title']} - ${song_url}")
 
         return {"source": audio["url"], "title": info["title"]}
