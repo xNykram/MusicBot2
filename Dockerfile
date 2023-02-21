@@ -4,11 +4,11 @@ COPY ./app /app/app
 
 COPY ./requirements.txt .
 
-RUN pip install -r requirements.txt
+RUN --mount=type=cache,target=/root/.cache/pip pip install -r requirements.txt
 
 RUN apt-get upgrade & apt-get update
 
-RUN apt-get install -y ffmpeg
+RUN --mount=type=cache,target=/root/.cache/ffmpeg apt-get install -y ffmpeg
 
 ENV PYTHONPATH=/app
 

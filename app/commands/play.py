@@ -23,10 +23,14 @@ def search(query: str) -> dict:
 
 
 @client.command(name="play")
-async def play(ctx: Context, *, query: str):
+async def play(ctx: Context, *, query=None):
     """Play a song from YouTube"""
     if not ctx.message.author.voice:
         return await ctx.send("You are not on any voice channel.")
+    if not query:
+        return await ctx.send(
+            "Please specify a song name or url.\n**Example**: !play Best EDM Music"
+        )
     voice_client = await ctx.invoke(client.get_command("join"))
     logger.info("Searching for song...")
     result = search(query)
