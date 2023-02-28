@@ -37,7 +37,7 @@ class Player:
         if not len(queue) == 0:
             queue.pop(0)
         if len(queue) > 0:
-            song_stream = self.download_song(queue[-1].url)
+            song_stream = self.download_song(queue[0].url)
             voice.play(
                 FFmpegPCMAudio(song_stream["source"], **FFMPEG_OPTIONS),
                 after=lambda _: self.play_next(voice),
@@ -52,14 +52,11 @@ class Player:
             info = ydl.extract_info("ytsearch:%s" % song_url, download=False)[
                 "entries"
             ][0]
-
             audio = next(
                 f
                 for f in info["formats"]
                 if (f["acodec"] != "none" and f["vcodec"] == "none")
             )
-
             if not audio:
                 raise Exception(f"No audio found for ${info['title']} - ${song_url}")
-
         return {"source": audio["url"], "title": info["title"]}
