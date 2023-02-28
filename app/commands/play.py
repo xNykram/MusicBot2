@@ -52,7 +52,7 @@ async def play(ctx: Context, *, query=None):
         queue.append(current_song)
     else:
         queue.append(current_song)
-        song = queue[-1]
+        song = queue[0]
         await ctx.send(
             "Playing {} ({}) ({})".format(song.name, song.url, song.duration)
         )

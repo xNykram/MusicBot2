@@ -3,7 +3,7 @@ services:
   pytest:
     build:
       context: .
-      dockerfile: development/local/pytest/Dockerfile
+      dockerfile: docker/dev/pytest/Dockerfile
     container_name: pytest
     env_file:
       - .env

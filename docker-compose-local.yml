@@ -3,7 +3,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: docker/dev/Dockerfile
     volumes:
       - ./app:/app/app
     command: ["python3", "app/app/main.py"]
