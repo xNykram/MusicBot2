@@ -2,8 +2,8 @@ name: ci-cd
 
 on:
   push:
-    tags:
-      - '*'
+    branches:
+      - main
 
 jobs:
   build:
