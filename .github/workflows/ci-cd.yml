@@ -48,17 +48,4 @@ jobs:
           script: |
             sudo docker pull websoftdevs/musicbot:prod
             sudo echo -e 'BOT_TOKEN=${{ secrets.BOT_TOKEN }}\nPREFIX=${{ secrets.PREFIX }}' | sudo tee MusicBot2/.env
-  release:
-    name: release
-    needs: deploy
-    runs-on: ubuntu-latest
-    steps:
-      - name: deploy
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOSTNAME }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
-          script: |
             cd MusicBot2 && sudo docker compose -f docker-compose-prod.yml up -d
