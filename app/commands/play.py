@@ -29,7 +29,7 @@ async def play(ctx: Context, *, query=None):
         return await ctx.send("You are not on any voice channel.")
     if not query:
         return await ctx.send(
-            "Please specify a song name or url.\n**Example**: !play Best EDM Music"
+            "Please specify a song name or url.\n**Example**: !play Best EDM Music",
         )
     voice_client = await ctx.invoke(client.get_command("join"))
     logger.info("Searching for song...")
@@ -54,10 +54,12 @@ async def play(ctx: Context, *, query=None):
         queue.append(current_song)
         song = queue[0]
         await ctx.send(
-            "Playing {} ({}) ({})".format(song.name, song.url, song.duration)
+            "Playing {} ({}) ({})".format(song.name, song.url, song.duration),
         )
         player = Player(
-            guild_id=ctx.guild.id, song_url=song.url, voice_connection=voice_client
+            guild_id=ctx.guild.id,
+            song_url=song.url,
+            voice_connection=voice_client,
         )
         response = await player.play_song(voice_client)
         if isinstance(response, ErrorResponse):
@@ -65,8 +67,8 @@ async def play(ctx: Context, *, query=None):
             return await ctx.send(
                 "```Unable to download/play requested song! \nInfo: {}\nAll"
                 " issues please report to the main developer: Nykram```".format(
-                    response.data
-                ).replace("https://", "")
+                    response.data,
+                ).replace("https://", ""),
             )
 
 

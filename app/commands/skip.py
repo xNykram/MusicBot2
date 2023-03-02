@@ -13,10 +13,11 @@ async def skip(ctx):
         voice_client.stop()
         await ctx.channel.send("Stopped playing the current song.")
     if queue:
-        # queue.pop(0)
         next_song = queue[0]
         Player(
-            guild_id=ctx.guild.id, song_url=next_song.url, voice_connection=voice_client
+            guild_id=ctx.guild.id,
+            song_url=next_song.url,
+            voice_connection=voice_client,
         )
         await ctx.channel.send("Now playing {}".format(next_song.name))
 

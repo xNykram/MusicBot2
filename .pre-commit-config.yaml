@@ -1,40 +1,28 @@
+default_language_version:
+    python: python3.11
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.3.0
+    rev: v4.4.0
     hooks:
-    -   id: check-added-large-files
-    -   id: end-of-file-fixer
     -   id: trailing-whitespace
-        name: "Check if commit is not directly to main branch"
-        default_stages: [push]
+    -   id: end-of-file-fixer
+    -   id: check-yaml
+    -   id: debug-statements
 -   repo: https://github.com/psf/black
     rev: 22.10.0
     hooks:
     -   id: black
-        name: "Check if code is formatted"
-        args: ["--check"]
-- repo: local
-  hooks:
-    - id: pylint
-      name: "Linter"
-      entry: pylint
-      language: system
-      types: [python]
-      args:
-        [
-          "-rn", # Only display messages
-          "-sn", # Don't display the score
-          "-d C0114", # Silence documentation warnings
-          "-d C0115", # ?
-          "-d C0116", # ?
-          "-d C0209", # Silence consider-using-f-string
-          "-d W0106", # Silence unassigned expression
-          "-d E0213", # Silence no-self-argument
-          "-d W0511", # Silence to do comments
-          "-d R0903", # Silence too-few-public-methods
-          "-d E0237", # Silence external attribute assignment
-          "-d E0611", # Silence no-name-in-module
-          "-d W1202", # Silence lazy formatting for logging
-          "-d W0703", # Silence general exception
-          "-d W0613", # Slience unused-argument
-        ]
+-   repo: https://github.com/asottile/add-trailing-comma
+    rev: v2.4.0
+    hooks:
+    -   id: add-trailing-comma
+-   repo: https://github.com/PyCQA/flake8
+    rev: 6.0.0
+    hooks:
+    -   id: flake8
+-   repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.0.1
+    hooks:
+    -   id: mypy
+        additional_dependencies: [types-all]
+        exclude: ^testing/resources/
