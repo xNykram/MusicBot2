@@ -47,4 +47,8 @@ async def main():
 
 
 if __name__ == "__main__":
+    if os.environ.get("APP_ENV") == "Dev":
+        import debugpy
+
+        debugpy.listen(("0.0.0.0", 5678))
     asyncio.run(main())
