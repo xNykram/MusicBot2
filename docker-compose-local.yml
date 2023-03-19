@@ -10,7 +10,7 @@ services:
     env_file:
       - .env
     ports:
-      - "8995:8995"
+      - "5678:5678"
     container_name: musicbot
     depends_on:
       - db
