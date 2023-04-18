@@ -8,6 +8,3 @@ class Song(BaseModel):
     url: str
     duration: str
     requester: Any
-
-    def display(self):
-        return "{} ({})".format(self.title, self.duration)

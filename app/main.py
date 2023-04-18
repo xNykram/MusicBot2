@@ -4,7 +4,7 @@ import asyncio
 from sys import stdout
 import discord
 from discord.ext import commands
-from app.api.client import Client
+from app.core.client import Client
 
 logging.basicConfig(stream=stdout, level=logging.INFO)
 logger = logging.getLogger("main")
@@ -34,11 +34,10 @@ async def on_ready():
 
 @client.event
 async def on_voice_state_update(member, before, after):
-    if before.channel is not None and after.channel is None:
-        if len(before.channel.members) == 1:
-            if before.channel.guild.voice_client.is_playing():
-                return
-            await before.channel.guild.voice_client.disconnect()
+    voice_client = client.voice_clients[0] if client.voice_clients else None
+    if voice_client:
+        if len(voice_client.channel.members) == 1:
+            await voice_client.disconnect()
 
 
 async def main():
@@ -47,8 +46,4 @@ async def main():
 
 
 if __name__ == "__main__":
-    if os.environ.get("APP_ENV") == "Dev":
-        import debugpy
-
-        debugpy.listen(("0.0.0.0", 5678))
     asyncio.run(main())

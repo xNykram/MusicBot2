@@ -1,7 +1,7 @@
 from discord.ext.commands.context import Context
 from app.main import client
-from app.api.player import play_song
-from app.api.search import yt_search
+from app.core.player import play_song
+from app.core.search import yt_search
 
 
 @client.command(name="play")
@@ -34,7 +34,8 @@ async def play(ctx: Context, *, query=None):
                 new_song.duration,
             ),
         )
-        play_song(guild_id=ctx.guild.id, voice=voice_client, song_url=new_song.url)
+        queue.append(new_song)
+        play_song(guild_id=ctx.guild.id, voice=voice_client)
 
 
 async def setup(bot):

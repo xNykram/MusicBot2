@@ -1,5 +1,5 @@
 from app.main import client
-from app.api.player import play_song
+from app.core.player import play_song
 
 
 @client.command(name="skip")
@@ -12,7 +12,7 @@ async def skip(ctx):
     elif queue:
         voice_client.stop()
         next_song = queue[0]
-        play_song(guild_id=ctx.guild.id, voice=voice_client, song_url=next_song.url)
+        play_song(guild_id=ctx.guild.id, voice=voice_client)
         await ctx.channel.send("Now playing {}".format(next_song.name))
     else:
         await ctx.channel.send("There is nothing to skip!")

@@ -1,7 +1,7 @@
 import yt_dlp
 from app.main import client
 from discord import VoiceClient, FFmpegPCMAudio
-
+import logging
 ydl_options = {
     "format": "bestaudio",
     "noplaylist": True,
@@ -15,30 +15,21 @@ FFMPEG_OPTIONS = {
 }
 
 
-def play_song(guild_id: str, voice: VoiceClient, song_url: str):
-    song_stream = download_song(song_url)
-    try:
-        voice.play(
-            FFmpegPCMAudio(song_stream["source"], **FFMPEG_OPTIONS),
-            after=lambda _: process_next_song(guild_id, voice),
-        )
-    except Exception:
-        pass
-
-
-def process_next_song(guild_id: str, voice: VoiceClient):
+def play_song(guild_id: str, voice: VoiceClient):
     queue = client.get_queue(guild_id)
-    if not len(queue) == 0:
-        queue.pop(0)
     if len(queue) > 0:
+        song_url = queue[0].url
+        song_stream = download_song(song_url)
         try:
-            song_stream = download_song(song=queue[-1].url)
+            queue.pop(0)
             voice.play(
                 FFmpegPCMAudio(song_stream["source"], **FFMPEG_OPTIONS),
-                after=lambda _: process_next_song(voice),
+                after=lambda _: play_song(guild_id, voice),
             )
-        except TypeError:
+            
+        except Exception:
             pass
+        
 
 
 def download_song(song_url: str):
