@@ -1,8 +1,6 @@
-import logging
 import yt_dlp
-from discord import VoiceClient, FFmpegPCMAudio
 from app.main import client
-from app.schemas.error import ErrorResponse
+from discord import VoiceClient, FFmpegPCMAudio
 
 ydl_options = {
     "format": "bestaudio",
@@ -17,62 +15,45 @@ FFMPEG_OPTIONS = {
 }
 
 
-class Player:
-    def __init__(self, guild_id: int, voice_connection: VoiceClient, song_url: str):
-        self.guild_id = guild_id
-        self.voice_connection = voice_connection
-        self.song_stout = None
-        self.song_url = song_url
+def play_song(guild_id: str, voice: VoiceClient, song_url: str):
+    song_stream = download_song(song_url)
+    try:
+        voice.play(
+            FFmpegPCMAudio(song_stream["source"], **FFMPEG_OPTIONS),
+            after=lambda _: process_next_song(guild_id, voice),
+        )
+    except Exception:
+        pass
 
-    async def play_song(self, voice):
+
+def process_next_song(guild_id: str, voice: VoiceClient):
+    queue = client.get_queue(guild_id)
+    if not len(queue) == 0:
+        queue.pop(0)
+    if len(queue) > 0:
         try:
-            song_stream = self.download_song(self.song_url)
-
+            song_stream = download_song(song=queue[-1].url)
             voice.play(
                 FFmpegPCMAudio(song_stream["source"], **FFMPEG_OPTIONS),
-                after=lambda _: self.play_next(voice),
+                after=lambda _: process_next_song(voice),
             )
-        except Exception as key:
-            logging.warning(key)
-            return ErrorResponse(type="YTDL", data=str(key))
+        except TypeError:
+            pass
 
-    def play_next(self, voice):
-        queue = client.get_queue(self.guild_id)
-        if not len(queue) == 0:
-            queue.pop(0)
-        if len(queue) > 0:
-            song_stream = self.download_song(queue[0].url)
-            voice.play(
-                FFmpegPCMAudio(song_stream["source"], **FFMPEG_OPTIONS),
-                after=lambda _: self.play_next(voice),
+
+def download_song(song_url: str):
+    with yt_dlp.YoutubeDL(ydl_options) as ydl:
+        ydl.cache.remove()
+        info = ydl.extract_info("ytsearch:%s" % song_url, download=False)
+        entries_len = len(info["entries"])
+        if entries_len == 0:
+            raise Exception(
+                "Could not download requested song, please try again later.",
             )
-        else:
-            logging.warning("Queue is empty.")
-
-    @staticmethod
-    def try_again(ydl, song_url):
-        for _ in range(3):
-            info = ydl.extract_info("ytsearch:%s" % song_url, download=False)
-            print(info)
-            if len(info["entries"]) > 0:
-                return info
-        return 1
-
-    def download_song(self, song_url):
-        with yt_dlp.YoutubeDL(ydl_options) as ydl:
-            ydl.cache.remove()
-            info = ydl.extract_info("ytsearch:%s" % song_url, download=False)
-            entries_len = len(info["entries"])
-            if entries_len == 0:
-                info = self.try_again(ydl, song_url)
-                if info == 1:
-                    raise Exception(
-                        "Could not download requested song, please try again later.",
-                    )
-            info = info["entries"][0]
-            audio = next(
-                f
-                for f in info["formats"]
-                if (f["acodec"] != "none" and f["vcodec"] == "none")
-            )
-        return {"source": audio["url"], "title": info["title"]}
+        info = info["entries"][0]
+        audio = next(
+            f
+            for f in info["formats"]
+            if (f["acodec"] != "none" and f["vcodec"] == "none")
+        )
+    return {"source": audio["url"], "title": info["title"]}

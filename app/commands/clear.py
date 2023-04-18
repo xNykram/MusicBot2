@@ -1,7 +1,4 @@
-from logging import Logger
 from app.main import client
-
-logger = Logger("clear")
 
 
 @client.command(name="clear")
@@ -15,4 +12,3 @@ async def clear(ctx):
 
 async def setup(bot):
     bot.add_command(clear)
-    logger.info("Setup done.")

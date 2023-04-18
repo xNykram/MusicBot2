@@ -1,4 +1,4 @@
-FROM python:3.11.1-slim
+FROM python:3.11.2-slim
 
 COPY ../../app /app/app
 
@@ -21,6 +21,7 @@ ENV APP_ENV=dev \
   PYTHONPATH=/app
 
 RUN --mount=type=cache,target="$POETRY_CACHE_DIR" pip install "poetry==$POETRY_VERSION"
+
 
 RUN --mount=type=cache,target="$POETRY_CACHE_DIR" \
     poetry install \

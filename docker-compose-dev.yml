@@ -1,0 +1,14 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: compose/dev/Dockerfile
+    volumes:
+      - ./app:/app/app
+    command: ["python3", "app/app/main.py"]
+    env_file:
+      - .env
+    ports:
+      - "5678:5678"
+    container_name: musicbot

@@ -1,30 +1,11 @@
-from logging import Logger
-from ast import literal_eval
-from youtube_search import YoutubeSearch as SearchEngine
 from discord.ext.commands.context import Context
-from app.schemas.song import Song
 from app.main import client
-from app.api.player import Player
-from app.schemas.error import ErrorResponse
-
-logger = Logger("play")
-
-
-def on_downloaded(_: str):
-    pass
-
-
-def search(query: str) -> dict:
-    result = SearchEngine(query, max_results=1).videos
-    if len(result) == 0:
-        return {}
-
-    return literal_eval(str(result[0]))
+from app.api.player import play_song
+from app.api.search import yt_search
 
 
 @client.command(name="play")
 async def play(ctx: Context, *, query=None):
-    """Play a song from YouTube"""
     if not ctx.message.author.voice:
         return await ctx.send("You are not on any voice channel.")
     if not query:
@@ -32,46 +13,29 @@ async def play(ctx: Context, *, query=None):
             "Please specify a song name or url.\n**Example**: !play Best EDM Music",
         )
     voice_client = await ctx.invoke(client.get_command("join"))
-    logger.info("Searching for song...")
-    result = search(query)
-    if result == {}:
+    queue = client.get_queue(ctx.guild.id)
+    new_song = yt_search(query)
+
+    if not new_song:
         return await ctx.send("No result found.")
 
     if ctx.guild is None:
         return await ctx.send("You must be in a guild to use this command.")
 
-    queue = client.get_queue(ctx.guild.id)
-    current_song = Song(
-        id=len(queue) + 1,
-        name=result["title"],
-        url="https://www.youtube.com" + result["url_suffix"],
-        duration=result["duration"],
-    )
-    if len(queue) > 0:
-        await ctx.send("Added {} to queue!".format(current_song.name))
-        queue.append(current_song)
+    if voice_client.is_playing():
+        queue.append(new_song)
+        await ctx.send("Added {} to queue!".format(new_song.name))
+
     else:
-        queue.append(current_song)
-        song = queue[0]
         await ctx.send(
-            "Playing {} ({}) ({})".format(song.name, song.url, song.duration),
+            "Playing {} ({}) ({})".format(
+                new_song.name,
+                new_song.url,
+                new_song.duration,
+            ),
         )
-        player = Player(
-            guild_id=ctx.guild.id,
-            song_url=song.url,
-            voice_connection=voice_client,
-        )
-        response = await player.play_song(voice_client)
-        if isinstance(response, ErrorResponse):
-            client.queue_map.clear()
-            return await ctx.send(
-                "```Unable to download/play requested song! \nInfo: {}\nAll"
-                " issues please report to the main developer: Nykram```".format(
-                    response.data,
-                ).replace("https://", ""),
-            )
+        play_song(guild_id=ctx.guild.id, voice=voice_client, song_url=new_song.url)
 
 
 async def setup(bot):
     bot.add_command(play)
-    logger.info("Setup done.")
