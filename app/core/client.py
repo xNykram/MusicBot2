@@ -1,11 +1,8 @@
-import logging
 from os import listdir
 from discord.ext import commands
 
 
 class Client(commands.Bot):
-    logger = logging.getLogger("client")
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.queue_map = {}
@@ -15,7 +12,6 @@ class Client(commands.Bot):
         for cmd in listdir("/app/app/commands"):
             if cmd.endswith(".py") and cmd != "__init__.py":
                 await self.load_extension(f"app.commands.{cmd[:-3]}")
-                self.logger.info("Loaded %s command.", cmd[:-3])
 
     def get_queue(self, guild_id: int) -> list:
         if guild_id not in self.queue_map:

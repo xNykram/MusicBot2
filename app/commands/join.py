@@ -1,7 +1,4 @@
-from logging import Logger
 from app.main import client
-
-logger = Logger("join")
 
 
 @client.command(name="join")
@@ -20,4 +17,3 @@ async def join(ctx):
 
 async def setup(bot):
     bot.add_command(join)
-    logger.info("Setup done.")

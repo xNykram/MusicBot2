@@ -5,11 +5,11 @@ description = "Discord MusicBot2 - Poetry"
 authors = ["Patryk Ladocha <patrykladocha76@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "3.11.1"
+python = "3.11.2"
 sqlalchemy = "1.4.44"
 youtube_search = "2.1.2"
 pydantic = "1.10.2"
-yt-dlp = "2023.3.4"
+yt-dlp = { git = "https://github.com/yt-dlp/yt-dlp", branch = "master" }
 pynacl = "1.5.0"
 'discord.py' = "2.2.2"
 

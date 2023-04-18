@@ -1,17 +1,20 @@
-from app.api.song import Song
+from .song import Song
+from pydantic import BaseModel
 
 
-class Queue:
-    def __init__(self):
-        self.queue = []
+class Queue(BaseModel):
+    queue: list = []
 
     def enqueue(self, item: Song):
         self.queue.append(item)
 
     def dequeue(self):
         if len(self.queue) < 1:
-            return None
+            return
         return self.queue.pop(0)
+
+    def clear(self):
+        self.queue = []
 
     def size(self):
         return len(self.queue)

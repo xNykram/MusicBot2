@@ -1,8 +1,4 @@
-from logging import Logger
-
 from app.main import client
-
-logger = Logger("skip")
 
 
 @client.command(name="stop")
@@ -17,4 +13,3 @@ async def stop(ctx):
 
 async def setup(bot):
     bot.add_command(stop)
-    logger.info("Setup done.")

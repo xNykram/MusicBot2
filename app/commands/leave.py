@@ -1,7 +1,4 @@
-from logging import Logger
 from app.main import client
-
-logger = Logger("leave")
 
 
 @client.command(name="leave")
@@ -17,4 +14,3 @@ async def leave(ctx):
 
 async def setup(bot):
     bot.add_command(leave)
-    logger.info("Setup done.")
