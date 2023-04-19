@@ -1,7 +1,7 @@
 from app.main import client
 
 
-@client.command(name="queue")
+@client.command(name="queue", description="Shows the current queue of songs.")
 async def queue(ctx):
     queue_list = client.get_queue(ctx.guild.id)
 

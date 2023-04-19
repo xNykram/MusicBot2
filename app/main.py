@@ -11,6 +11,7 @@ logger = logging.getLogger("main")
 
 if os.environ.get("BOT_TOKEN") is None:
     raise ValueError("BOT_TOKEN environment variable not set")
+
 BOT_TOKEN = os.environ.get("BOT_TOKEN") or ""
 
 BOT_PREFIX = os.environ.get("PREFIX") or "!"
@@ -21,6 +22,7 @@ client = Client(
     command_prefix=commands.when_mentioned_or(BOT_PREFIX),
     case_insensitive=True,
     intents=INTENTS,
+    help_command=None
 )
 
 

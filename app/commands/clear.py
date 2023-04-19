@@ -1,7 +1,7 @@
 from app.main import client
 
 
-@client.command(name="clear")
+@client.command(name="clear", description="Clears the current queue of songs.")
 async def clear(ctx):
     queue_list = client.get_queue(ctx.guild.id)
     if queue_list:
