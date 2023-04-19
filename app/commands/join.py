@@ -1,7 +1,7 @@
 from app.main import client
 
 
-@client.command(name="join")
+@client.command(name="join", description="Joins the voice channel that the user is in.")
 async def join(ctx):
     channel = ctx.author.voice
     if channel:

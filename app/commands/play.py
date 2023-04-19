@@ -4,7 +4,7 @@ from app.core.player import play_song
 from app.core.search import yt_search
 
 
-@client.command(name="play")
+@client.command(name="play", description="Plays a song or adds it to the queue if a song is already playing.")
 async def play(ctx: Context, *, query=None):
     if not ctx.message.author.voice:
         return await ctx.send("You are not on any voice channel.")

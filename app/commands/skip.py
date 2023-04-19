@@ -2,7 +2,7 @@ from app.main import client
 from app.core.player import play_song
 
 
-@client.command(name="skip")
+@client.command(name="skip", description="Skips the currently playing song.")
 async def skip(ctx):
     queue = client.get_queue(ctx.guild.id)
     voice_client = ctx.guild.voice_client

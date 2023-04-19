@@ -1,7 +1,7 @@
 from app.main import client
 
 
-@client.command(name="leave")
+@client.command(name="leave", description="Leaves the voice channel.")
 async def leave(ctx):
     channel = ctx.author.voice
     if channel:
