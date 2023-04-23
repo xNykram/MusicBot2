@@ -1,16 +1,12 @@
-from ast import literal_eval
-from youtube_search import YoutubeSearch as SearchEngine
-from app.schemas.song import Song
+from app.core.sc.search import sc_search
+from app.core.yt.search import yt_search
 
 
-def yt_search(query: str) -> dict:
-    result = SearchEngine(query, max_results=1).videos
-    if len(result) == 0:
-        return 0
-    video = literal_eval(str(result[0]))
-    return Song(
-        id=video["id"],
-        name=video["title"],
-        duration=video["duration"],
-        url="https://www.youtube.com/watch?v=" + video["id"],
-    )
+def search(query: str):
+    if "https://soundcloud.com/" in query:
+        song = sc_search(query)
+    elif "https://open.spotify.com" in query:
+        pass
+    else:
+        song = yt_search(query)
+    return song

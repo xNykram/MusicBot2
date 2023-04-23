@@ -1,7 +1,8 @@
 import yt_dlp
+from discord import FFmpegPCMAudio, VoiceClient
+
 from app.main import client
-from discord import VoiceClient, FFmpegPCMAudio
-import logging
+
 ydl_options = {
     "format": "bestaudio",
     "noplaylist": True,
@@ -26,10 +27,9 @@ def play_song(guild_id: str, voice: VoiceClient):
                 FFmpegPCMAudio(song_stream["source"], **FFMPEG_OPTIONS),
                 after=lambda _: play_song(guild_id, voice),
             )
-            
+
         except Exception:
             pass
-        
 
 
 def download_song(song_url: str):

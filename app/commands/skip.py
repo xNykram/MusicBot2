@@ -1,5 +1,5 @@
-from app.main import client
 from app.core.player import play_song
+from app.main import client
 
 
 @client.command(name="skip", description="Skips the currently playing song.")
