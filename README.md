@@ -16,14 +16,15 @@
 
 
 
-#### Features:
+### Features:
 
 - Integration with YouTube and SoundCloud
 - Fast and responsive
 - Simple to use
 - Easy installation
+- Lightweight
 
-#### Commands:
+### Commands:
 
 MusicBot supports a range of commands that are intuitive and easy to use. Here's a quick rundown of the available commands:
 
@@ -39,7 +40,7 @@ MusicBot supports a range of commands that are intuitive and easy to use. Here's
 
 - Integration with Spotify
 
-### Development
+### Local development
 
 To set up and run the app locally, follow these steps:
 
