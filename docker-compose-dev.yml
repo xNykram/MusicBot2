@@ -1,6 +1,8 @@
-version: '3'
+version: "3"
 services:
   app:
+    image: music_bot:local
+    container_name: musicbot
     build:
       context: .
       dockerfile: compose/dev/Dockerfile
@@ -11,4 +13,3 @@ services:
       - .env
     ports:
       - "5678:5678"
-    container_name: musicbot

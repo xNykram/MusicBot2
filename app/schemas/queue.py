@@ -1,5 +1,6 @@
-from .song import Song
 from pydantic import BaseModel
+
+from .song import Song
 
 
 class Queue(BaseModel):

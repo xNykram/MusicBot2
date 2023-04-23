@@ -1,9 +1,11 @@
-import os
-import logging
 import asyncio
+import logging
+import os
 from sys import stdout
+
 import discord
 from discord.ext import commands
+
 from app.core.client import Client
 
 logging.basicConfig(stream=stdout, level=logging.INFO)
@@ -22,7 +24,7 @@ client = Client(
     command_prefix=commands.when_mentioned_or(BOT_PREFIX),
     case_insensitive=True,
     intents=INTENTS,
-    help_command=None
+    help_command=None,
 )
 
 
