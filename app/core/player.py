@@ -1,5 +1,5 @@
 import yt_dlp
-from discord import FFmpegPCMAudio, VoiceClient
+from discord import FFmpegPCMAudio, VoiceClient, PCMVolumeTransformer
 
 from app.main import client
 
@@ -23,11 +23,8 @@ def play_song(guild_id: str, voice: VoiceClient):
         song_stream = download_song(song_url)
         try:
             queue.pop(0)
-            voice.play(
-                FFmpegPCMAudio(song_stream["source"], **FFMPEG_OPTIONS),
-                after=lambda _: play_song(guild_id, voice),
-            )
-
+            audio_source = PCMVolumeTransformer(FFmpegPCMAudio(song_stream["source"], **FFMPEG_OPTIONS))
+            voice.play(audio_source, after=lambda _: play_song(guild_id, voice))
         except Exception:
             pass
 
@@ -45,6 +42,6 @@ def download_song(song_url: str):
         audio = next(
             f
             for f in info["formats"]
-            if (f["acodec"] != "none" and f["vcodec"] == "none")
+            if ("acodec" in f and (f["acodec"] != "none" and f["vcodec"] == "none"))
         )
     return {"source": audio["url"], "title": info["title"]}
