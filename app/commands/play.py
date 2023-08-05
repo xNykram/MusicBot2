@@ -28,15 +28,11 @@ async def play(ctx: Context, *, query=None):
 
     if voice_client.is_playing():
         queue.append(new_song)
-        await ctx.send("Added {} to queue!".format(new_song.name))
+        await ctx.send(f"Added {new_song.name} to queue!")
 
     else:
         await ctx.send(
-            "Playing {} ({}) ({})".format(
-                new_song.name,
-                new_song.url,
-                new_song.duration,
-            ),
+            f"Playing {new_song.name} ({new_song.url}) ({new_song.duration})"
         )
         queue.append(new_song)
         play_song(guild_id=ctx.guild.id, voice=voice_client)

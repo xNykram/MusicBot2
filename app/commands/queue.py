@@ -8,8 +8,8 @@ async def queue(ctx):
     if queue_list:
         buffer = ""
         for index, song in enumerate(queue_list):
-            buffer += "{}. {}\n".format(index + 1, song.name)
-        return await ctx.channel.send("**Current queue:**\n" "{}".format(buffer))
+            buffer += f"{index + 1}. {song.name}\n"
+        return await ctx.channel.send(f"**Current queue:**\n {buffer}")
     return await ctx.channel.send("Queue is empty!")
 
 

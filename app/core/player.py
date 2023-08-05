@@ -1,5 +1,5 @@
 import yt_dlp
-from discord import FFmpegPCMAudio, VoiceClient, PCMVolumeTransformer
+from discord import FFmpegPCMAudio, PCMVolumeTransformer, VoiceClient
 
 from app.main import client
 
@@ -21,21 +21,20 @@ def play_song(guild_id: str, voice: VoiceClient):
     if len(queue) > 0:
         song_url = queue[0].url
         song_stream = download_song(song_url)
-        try:
-            queue.pop(0)
-            audio_source = PCMVolumeTransformer(FFmpegPCMAudio(song_stream["source"], **FFMPEG_OPTIONS))
-            voice.play(audio_source, after=lambda _: play_song(guild_id, voice))
-        except Exception:
-            pass
+        queue.pop(0)
+        audio_source = PCMVolumeTransformer(
+            FFmpegPCMAudio(song_stream["source"], **FFMPEG_OPTIONS)
+        )
+        voice.play(audio_source, after=lambda _: play_song(guild_id, voice))
 
 
 def download_song(song_url: str):
     with yt_dlp.YoutubeDL(ydl_options) as ydl:
         ydl.cache.remove()
-        info = ydl.extract_info("ytsearch:%s" % song_url, download=False)
+        info = ydl.extract_info(f"ytsearch:{song_url}", download=False)
         entries_len = len(info["entries"])
         if entries_len == 0:
-            raise Exception(
+            raise IndexError(
                 "Could not download requested song, please try again later.",
             )
         info = info["entries"][0]

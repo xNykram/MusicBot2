@@ -4,17 +4,13 @@
 ![size](https://img.shields.io/docker/image-size/websoftdevs/musicbot?style=flat-square)
 ![build](https://img.shields.io/github/actions/workflow/status/xNykram/Musicbot2/ci-cd.yml?style=flat-square)
 
-
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 ![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white)
 
-
 ### Description
 
 **MusicBot** is a simple-to-use Discord bot that allows you to play music from various platforms such as YouTube and SoundCloud. With integration to popular streaming platforms, you can easily search and play your favorite tunes right from your Discord server.
-
-
 
 ### Features:
 

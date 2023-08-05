@@ -1,14 +1,13 @@
 version: "3"
 services:
   app:
-    image: music_bot:local
+    image: music_bot:dev
     container_name: musicbot
     build:
       context: .
-      dockerfile: compose/dev/Dockerfile
-    volumes:
-      - ./app:/app/app
-    command: ["python3", "app/app/main.py"]
+      dockerfile: Dockerfile
+      target: development
+    command: ["python3", "app/main.py"]
     env_file:
       - .env
     ports:

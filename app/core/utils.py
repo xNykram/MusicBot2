@@ -1,4 +1,4 @@
-def millisConverter(milli: int) -> str:
+def millis_converter(milli: int) -> str:
     """
     Converts milliseconds to MM:SS format.
     """

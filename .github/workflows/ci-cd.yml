@@ -25,6 +25,7 @@ jobs:
         with:
           context: .
           file: compose/prod/Dockerfile
+          target: production
           push: true
           tags: websoftdevs/musicbot:prod
 

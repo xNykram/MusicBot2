@@ -1,9 +1,3 @@
-.idea
 .env
-venv
-.pyc
-.ds_store
-__pycache__/
-coverage
 .vscode
-poetry.lock
+.mypy_cache
