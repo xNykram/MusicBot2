@@ -1,4 +1,4 @@
-# MusicBot
+# Rhenus Bot
 
 ![version](https://img.shields.io/github/v/tag/xNykram/MusicBot2?style=flat-square)
 ![size](https://img.shields.io/docker/image-size/websoftdevs/musicbot?style=flat-square)
@@ -10,7 +10,9 @@
 
 ### Description
 
-**MusicBot** is a simple-to-use Discord bot that allows you to play music from various platforms such as YouTube and SoundCloud. With integration to popular streaming platforms, you can easily search and play your favorite tunes right from your Discord server.
+![Logo](https://i.ibb.co/CsV6x4c/240-F-368950850-a-MW6-C9-P5-SV7ud-FGHWgz97fvg-NVsn-Ovpp.jpg)
+
+**Rhenus Bot** is a simple-to-use Discord bot that allows you to play music from various platforms such as YouTube and SoundCloud. With integration to popular streaming platforms, you can easily search and play your favorite tunes right from your Discord server.
 
 ### Features:
 
@@ -22,7 +24,7 @@
 
 ### Commands:
 
-MusicBot supports a range of commands that are intuitive and easy to use. Here's a quick rundown of the available commands:
+Rhenus Bot supports a range of commands that are intuitive and easy to use. Here's a quick rundown of the available commands:
 
 - `!help`: Displays all available commands
 - `!play`: Plays a song by URL or search query.
@@ -31,6 +33,7 @@ MusicBot supports a range of commands that are intuitive and easy to use. Here's
 - `!queue`: Displays the current song queue.
 - `!skip`: Skips the current song.
 - `!stop`: Stops playback entirely.
+- `!volume`: Changes the volume of the song.
 
 ### Plans
 
@@ -48,5 +51,7 @@ BOT_TOKEN=your_token_goes_here
 PREFIX=!
 ```
 
-3. Run the command `docker-compose -f docker-compose-local.yml up --build` to dockerize the app for the first time. When using the app subsequently, run the same command without `--build` flag.
+3. Run the command `docker-compose -f docker-compose-dev.yml up --build` to dockerize the app for the first time. When using the app subsequently, run the same command without `--build` flag.
 4. Finally, add the bot to your development server and type !help to get started.
+
+Enjoy!
