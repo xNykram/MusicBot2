@@ -9,7 +9,7 @@ python = "3.11.3"
 sqlalchemy = "1.4.44"
 youtube_search = "2.1.2"
 pydantic = "1.10.2"
-yt-dlp = { git = "https://github.com/yt-dlp/yt-dlp", branch = "master" }
+yt-dlp = "2023.7.6"
 pynacl = "1.5.0"
 'discord.py' = "2.2.2"
 requests="2.28.2"
