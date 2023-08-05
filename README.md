@@ -8,9 +8,9 @@
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 ![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white)
 
-### Description
-
 ![Logo](https://i.ibb.co/CsV6x4c/240-F-368950850-a-MW6-C9-P5-SV7ud-FGHWgz97fvg-NVsn-Ovpp.jpg)
+
+### Description
 
 **Rhenus Bot** is a simple-to-use Discord bot that allows you to play music from various platforms such as YouTube and SoundCloud. With integration to popular streaming platforms, you can easily search and play your favorite tunes right from your Discord server.
 
