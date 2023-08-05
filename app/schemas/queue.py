@@ -9,11 +9,6 @@ class Queue(BaseModel):
     def enqueue(self, item: Song):
         self.queue.append(item)
 
-    def dequeue(self):
-        if len(self.queue) < 1:
-            return
-        return self.queue.pop(0)
-
     def clear(self):
         self.queue = []
 
