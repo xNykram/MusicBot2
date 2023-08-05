@@ -24,7 +24,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: compose/prod/Dockerfile
+          file: Dockerfile
           target: production
           push: true
           tags: websoftdevs/musicbot:prod
