@@ -1,4 +1,5 @@
 import discord
+import platform
 
 from app.main import client
 
@@ -14,7 +15,7 @@ async def help(ctx):
         title="Available commands:", description="".join(info), color=0x716D6D
     )
     embed.set_footer(
-        text="Author: Nykram\nReport a bug: https://github.com/xNykram/music_bot/issues"
+        text=f"Author: Nykram | Python: {platform.python_version()}"
     )
     await ctx.send(embed=embed)
 
