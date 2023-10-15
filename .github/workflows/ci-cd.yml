@@ -27,6 +27,7 @@ jobs:
           file: Dockerfile
           target: production
           push: true
+          platforms: linux/arm64
           tags: websoftdevs/musicbot:prod
 
   deploy:
