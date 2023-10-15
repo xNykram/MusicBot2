@@ -1,5 +1,5 @@
 # Stage 1: Development
-FROM python:3.11.3-slim AS development
+FROM python:3.11.6-slim AS development
 
 ENV APP_ENV=dev \
   PYTHONFAULTHANDLER=1 \
@@ -22,8 +22,8 @@ RUN pip install "poetry==$POETRY_VERSION"
 
 WORKDIR /app
 
-COPY ../../app /app/app
-COPY ../../pyproject.toml .
+COPY ./app /app/app
+COPY ./pyproject.toml .
 
 RUN --mount=type=cache,target="$POETRY_CACHE_DIR" poetry install --no-interaction --no-ansi
 
