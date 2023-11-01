@@ -1,4 +1,3 @@
-# Stage 1: Development
 FROM python:3.11.6-slim AS development
 
 ENV APP_ENV=dev \
@@ -9,7 +8,7 @@ ENV APP_ENV=dev \
   PIP_NO_CACHE_DIR=1 \
   PIP_DISABLE_PIP_VERSION_CHECK=1 \
   PIP_DEFAULT_TIMEOUT=100 \
-  POETRY_VERSION=1.5.1 \
+  POETRY_VERSION=1.6.1 \
   POETRY_NO_INTERACTION=1 \
   POETRY_VIRTUALENVS_CREATE=false \
   POETRY_CACHE_DIR='/var/cache/pypoetry' \

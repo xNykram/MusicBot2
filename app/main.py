@@ -7,6 +7,7 @@ import discord
 from discord.ext import commands
 
 from app.core.client import Client
+from app.core.settings import config
 
 logging.basicConfig(stream=stdout, level=logging.INFO)
 logger = logging.getLogger("main")
@@ -14,14 +15,12 @@ logger = logging.getLogger("main")
 if os.environ.get("BOT_TOKEN") is None:
     raise ValueError("BOT_TOKEN environment variable not set")
 
-BOT_TOKEN = os.environ.get("BOT_TOKEN") or ""
 
-BOT_PREFIX = os.environ.get("PREFIX") or "!"
 INTENTS = discord.Intents.default()
 INTENTS.message_content = True
 
 client = Client(
-    command_prefix=commands.when_mentioned_or(BOT_PREFIX),
+    command_prefix=commands.when_mentioned_or(config.BOT_PREFIX),
     case_insensitive=True,
     intents=INTENTS,
     help_command=None,
@@ -30,7 +29,7 @@ client = Client(
 
 @client.event
 async def on_ready():
-    logging.info("Loaded prefix: %s", BOT_PREFIX)
+    logging.info("Loaded prefix: %s", config.BOT_PREFIX)
     logging.info("Bot started!")
     for command in client.commands:
         logging.info("Loaded command: %s", command.name)
@@ -46,7 +45,7 @@ async def on_voice_state_update(member, before, after):
 
 async def main():
     async with client:
-        await client.start(BOT_TOKEN)
+        await client.start(config.BOT_TOKEN)
 
 
 if __name__ == "__main__":

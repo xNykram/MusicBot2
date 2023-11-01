@@ -3,7 +3,6 @@ import platform
 
 from app.main import client
 
-
 @client.command(pass_context=True)
 async def help(ctx):
     info = [
