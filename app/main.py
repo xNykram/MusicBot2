@@ -9,7 +9,7 @@ from discord.ext import commands
 from app.core.client import Client
 from app.core.settings import config
 
-logging.basicConfig(stream=stdout, level=logging.INFO)
+logging.basicConfig(filename='/app/logs/log.txt', level=logging.INFO)
 logger = logging.getLogger("main")
 
 if os.environ.get("BOT_TOKEN") is None:

@@ -8,8 +8,9 @@ services:
       dockerfile: Dockerfile
       target: development
     command: ["python3", "app/main.py"]
+    volumes: 
+    - ./logs:/app/logs
     env_file:
       - .env
     ports:
       - "5678:5678"
-    network_mode: db-1
