@@ -5,7 +5,7 @@ description = "A discord music bot written in Python."
 authors = ["xNykram"]
 
 [tool.poetry.dependencies]
-python = "3.11.6"
+python = "3.12"
 youtube_search = "2.1.2"
 pydantic = "2.4.2"
 yt-dlp = "2023.10.13"
@@ -13,9 +13,8 @@ pynacl = "1.5.0"
 'discord.py' = "2.3.2"
 requests = "2.31.0"
 beautifulsoup4 = "4.12.2"
-sqlalchemy = "2.0.22"
 pydantic-settings = "2.0.3"
-psycopg2-binary = "*"
+aiohttp = "3.9.0b0"
 
 [tool.poetry.dev-dependencies]
 debugpy = "1.8.0"
