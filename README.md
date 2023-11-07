@@ -8,7 +8,7 @@
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 ![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white)
 
-![Logo](https://i.ibb.co/CsV6x4c/240-F-368950850-a-MW6-C9-P5-SV7ud-FGHWgz97fvg-NVsn-Ovpp.jpg)
+<img src="https://i.ibb.co/4JZ8GZb/logo.jpg" alt="Logo" width="120" height="120">
 
 ### Description
 
