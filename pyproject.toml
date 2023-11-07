@@ -37,3 +37,9 @@ skip_gitignore = true
 disable = [
     "C0114","C0115","C0116","E1101","W0613","W0622"
 ]
+
+[tool.pytest.ini_options]
+addopts = "--cov=. --cov-report=html:coverage-report"
+
+[tool.coverage.run]
+omit = ["__init__.py"]
