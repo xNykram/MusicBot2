@@ -7,6 +7,7 @@ import discord.ext.test as test
 
 import app as discord_bot
 
+
 @pytest.fixture
 def client(event_loop):
     c = discord.Client(loop=event_loop)
@@ -31,7 +32,6 @@ def bot(request, event_loop):
             b.load_extension(f".commands.{extension}", package="discord_bot")
             # b.load_extension(f"discord_bot.commands.{extension}")
 
-
     test.configure(b)
     return b
 
@@ -43,11 +43,11 @@ async def cleanup():
 
 
 def pytest_sessionfinish(session, exitstatus):
-    """ Code to execute after all tests. """
+    """Code to execute after all tests."""
 
     # dat files are created when using attachements
     print("\n-------------------------\nClean dpytest_*.dat files")
-    fileList = glob.glob('./dpytest_*.dat')
+    fileList = glob.glob("./dpytest_*.dat")
     for filePath in fileList:
         try:
             os.remove(filePath)

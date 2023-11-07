@@ -18,14 +18,17 @@ if os.environ.get("BOT_TOKEN") is None:
 intents = discord.Intents.default()
 intents.members = True
 intents.message_content = True
-client = commands.Bot(command_prefix=config.BOT_PREFIX, intents=intents)
+client = commands.Bot(
+    command_prefix=config.BOT_PREFIX, intents=intents, help_command=None
+)
+
 
 @client.event
 async def on_ready():
-    for filename in os.listdir('app/commands'):
-        if filename.endswith('.py'):
+    for filename in os.listdir("app/commands"):
+        if filename.endswith(".py"):
             await client.load_extension(f"app.commands.{filename[:-3]}")
-
+    logger.warning(msg="All commands loaded!")
 
 
 @client.event
@@ -35,9 +38,13 @@ async def on_voice_state_update(member, before, after):
         if len(voice_client.channel.members) == 1:
             await voice_client.disconnect()
 
+@client.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.CommandNotFound):
+        await ctx.send("Command does not exist.")
 
 def main():
-         client.run(config.BOT_TOKEN)
+    client.run(config.BOT_TOKEN)
 
 
 if __name__ == "__main__":

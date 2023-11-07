@@ -15,6 +15,19 @@ FFMPEG_OPTIONS = {
 }
 
 
+class MusicPlayer:
+    def __init__(self) -> None:
+        self.queue = {}
+
+    def return_queue(self, guild_id: str) -> list:
+        if guild_id not in self.queue:
+            self.queue[guild_id] = []
+        return self.queue.get(guild_id, [])
+
+
+mp = MusicPlayer()
+
+
 def play_song(guild_id: str, voice: VoiceClient):
     queue = client.get_queue(guild_id)
     if len(queue) > 0:
@@ -22,9 +35,10 @@ def play_song(guild_id: str, voice: VoiceClient):
         queue.pop(0)
         song_stream = download_song(song_url)
         audio_source = PCMVolumeTransformer(
-        FFmpegPCMAudio(song_stream["source"], **FFMPEG_OPTIONS))
+            FFmpegPCMAudio(song_stream["source"], **FFMPEG_OPTIONS)
+        )
         voice.play(audio_source, after=lambda _: play_song(guild_id, voice))
-        
+
 
 def download_song(song_url: str):
     with yt_dlp.YoutubeDL(ydl_options) as ydl:
@@ -32,7 +46,7 @@ def download_song(song_url: str):
         info = ydl.extract_info(f"ytsearch:{song_url}", download=False)
         entries_len = len(info["entries"])
         if entries_len == 0:
-            error =  f'Could not download requested song, please try again later. Song url: {song_url}'
+            error = f"Could not download requested song, please try again later. Song url: {song_url}"
             raise IndexError(error)
         info = info["entries"][0]
         audio = next(
