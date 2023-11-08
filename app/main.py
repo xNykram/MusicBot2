@@ -42,6 +42,8 @@ async def on_voice_state_update(member, before, after):
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         await ctx.send("Command does not exist.")
+    else:
+        logging.warning(error)
 
 def main():
     client.run(config.BOT_TOKEN)

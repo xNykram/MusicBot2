@@ -1,55 +1,29 @@
 import glob
 import os
-import pytest
-import discord
 import discord.ext.commands as commands
-import discord.ext.test as test
+import discord.ext.test as dpytest
+import pytest_asyncio
+from discord.ext.commands import Bot
+from discord import Intents
+import logging
 
-import app as discord_bot
+intents = Intents.all()
 
+@pytest_asyncio.fixture
+async def bot(event_loop):
+    bot = Bot(intents=intents, command_prefix="!", loop=event_loop, help_command=None)
+    for filename in os.listdir("/app/app/commands"):
+        if filename.endswith(".py"):
+            await bot.load_extension(f"app.commands.{filename[:-3]}")
+    await bot._async_setup_hook()
+    dpytest.configure(bot)
+    return bot
 
-@pytest.fixture
-def client(event_loop):
-    c = discord.Client(loop=event_loop)
-    test.configure(c)
-    return c
-
-
-@pytest.fixture
-def bot(request, event_loop):
-    intents = discord.Intents.default()
-    intents.members = True
-    b = commands.Bot("!", loop=event_loop, intents=intents)
-
-    marks = request.function.pytestmark
-    mark = None
-    for mark in marks:
-        if mark.name == "command":
-            break
-
-    if mark is not None:
-        for extension in mark.args:
-            b.load_extension(f".commands.{extension}", package="discord_bot")
-            # b.load_extension(f"discord_bot.commands.{extension}")
-
-    test.configure(b)
-    return b
-
-
-@pytest.fixture(autouse=True)
-async def cleanup():
-    yield
-    await test.empty_queue()
-
-
-def pytest_sessionfinish(session, exitstatus):
-    """Code to execute after all tests."""
-
-    # dat files are created when using attachements
-    print("\n-------------------------\nClean dpytest_*.dat files")
-    fileList = glob.glob("./dpytest_*.dat")
-    for filePath in fileList:
+def pytest_sessionfinish():
+    files = glob.glob("./dpytest_*.dat")
+    for path in files:
         try:
-            os.remove(filePath)
-        except Exception:
-            print("Error while deleting file : ", filePath)
+            os.remove(path)
+        except Exception as e:
+            print(f"Error while deleting file {path}: {e}")
+    print("\npySession closed successfully")

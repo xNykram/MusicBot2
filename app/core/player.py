@@ -29,7 +29,7 @@ mp = MusicPlayer()
 
 
 def play_song(guild_id: str, voice: VoiceClient):
-    queue = client.get_queue(guild_id)
+    queue = mp.return_queue(guild_id)
     if len(queue) > 0:
         song_url = queue[0].url
         queue.pop(0)

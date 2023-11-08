@@ -10,7 +10,7 @@ class Clear(commands.Cog):
     async def clear(self, ctx: commands.Context):
         queue_list = mp.return_queue(ctx.guild.id)
         if queue_list:
-            mp.queue_map.clear()
+            mp.queue.clear()
             return await ctx.channel.send("The queue has been cleared.")
         return await ctx.channel.send("There is nothing to clear.")
 

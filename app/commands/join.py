@@ -1,13 +1,12 @@
 from discord.ext import commands
 
-
 class Join(commands.Cog):
     def __init__(self, client):
         self.client = client
 
     @commands.command(help="Joins the voice channel that the user is in.")
     async def join(self, ctx: commands.Context):
-        channel = ctx.author.voice
+        channel = await get_channel(ctx)
         if channel:
             if ctx.guild.voice_client is not None:
                 await ctx.guild.voice_client.move_to(channel.channel)
@@ -21,3 +20,7 @@ class Join(commands.Cog):
 
 async def setup(client):
     await client.add_cog(Join(client))
+
+
+async def get_channel(ctx: commands.Context):
+    return ctx.author.voice

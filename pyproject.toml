@@ -17,7 +17,10 @@ pydantic-settings = "2.0.3"
 aiohttp = "3.9.0b0"
 
 [tool.poetry.dev-dependencies]
-debugpy = "1.8.0"
+dpytest = "0.7.0"
+pytest = "7.4.3"
+pytest-asyncio = "0.21.1"
+pytest-cov = "4.1.0"
 
 [build-system]
 requires = ["poetry-core"]
