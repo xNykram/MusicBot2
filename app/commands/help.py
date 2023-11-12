@@ -1,11 +1,12 @@
-import discord
 import platform
 
+import discord
 from discord.ext import commands
+from discord.ext.commands import Bot
 
 
 class Help(commands.Cog):
-    def __init__(self, client):
+    def __init__(self, client: Bot):
         self.client = client
 
     @commands.command()
@@ -25,5 +26,5 @@ class Help(commands.Cog):
         await ctx.send(embed=embed)
 
 
-async def setup(client):
+async def setup(client: Bot) -> None:
     await client.add_cog(Help(client))

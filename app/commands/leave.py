@@ -1,9 +1,11 @@
 from discord.ext import commands
+from discord.ext.commands import Bot
+
 from app.core.player import mp
 
 
 class Leave(commands.Cog):
-    def __init__(self, client):
+    def __init__(self, client: Bot):
         self.client = client
 
     @commands.command(help="Leaves the voice channel.")
@@ -17,5 +19,5 @@ class Leave(commands.Cog):
             await ctx.channel.send("You are not connected to a voice channel.")
 
 
-async def setup(client):
+async def setup(client: Bot) -> None:
     await client.add_cog(Leave(client))

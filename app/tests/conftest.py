@@ -1,16 +1,16 @@
 import glob
 import os
-import discord.ext.commands as commands
+
 import discord.ext.test as dpytest
 import pytest_asyncio
-from discord.ext.commands import Bot
 from discord import Intents
-import logging
+from discord.ext.commands import Bot
 
 intents = Intents.all()
 
+
 @pytest_asyncio.fixture
-async def bot(event_loop):
+async def bot(event_loop) -> Bot:
     bot = Bot(intents=intents, command_prefix="!", loop=event_loop, help_command=None)
     for filename in os.listdir("/app/app/commands"):
         if filename.endswith(".py"):
@@ -19,7 +19,8 @@ async def bot(event_loop):
     dpytest.configure(bot)
     return bot
 
-def pytest_sessionfinish():
+
+def pytest_sessionfinish() -> None:
     files = glob.glob("./dpytest_*.dat")
     for path in files:
         try:

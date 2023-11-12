@@ -1,10 +1,10 @@
 # from app.main import client
 from discord.ext import commands
-from discord.utils import get
+from discord.ext.commands import Bot
 
 
 class Volume(commands.Cog):
-    def __init__(self, client):
+    def __init__(self, client: Bot):
         self.client = client
 
     @commands.command()
@@ -23,5 +23,5 @@ class Volume(commands.Cog):
             await ctx.channel.send("I am not connected to any voice channels.")
 
 
-async def setup(client):
+async def setup(client: Bot) -> None:
     await client.add_cog(Volume(client))

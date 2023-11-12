@@ -1,6 +1,3 @@
-import hashlib
-
-
 def millis_converter(milli: int) -> str:
     """
     Converts milliseconds to MM:SS format.

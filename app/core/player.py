@@ -1,6 +1,5 @@
 import yt_dlp
 from discord import FFmpegPCMAudio, PCMVolumeTransformer, VoiceClient
-from app.main import client
 
 ydl_options = {
     "format": "bestaudio",
@@ -46,7 +45,9 @@ def download_song(song_url: str):
         info = ydl.extract_info(f"ytsearch:{song_url}", download=False)
         entries_len = len(info["entries"])
         if entries_len == 0:
-            error = f"Could not download requested song, please try again later. Song url: {song_url}"
+            error = (
+                f"Could not download requested song, please try again later. Song url: {song_url}"
+            )
             raise IndexError(error)
         info = info["entries"][0]
         audio = next(

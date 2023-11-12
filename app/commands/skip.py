@@ -1,13 +1,15 @@
 from discord.ext import commands
-from app.core.player import mp
-from app.core.player import play_song
+from discord.ext.commands import Bot
+
+from app.core.player import mp, play_song
+
 
 class Skip(commands.Cog):
-    def __init__(self, client):
+    def __init__(self, client: Bot):
         self.client = client
 
     @commands.command(help="Skips the currently playing song.")
-    async def skip(self, ctx):
+    async def skip(self, ctx: commands.Context) -> commands.Context:
         queue = mp.return_queue(ctx.guild.id)
         voice_client = ctx.guild.voice_client
         if voice_client:
@@ -25,5 +27,5 @@ class Skip(commands.Cog):
             await ctx.channel.send("I am not connected to any voice channels.")
 
 
-async def setup(client):
+async def setup(client: Bot) -> None:
     await client.add_cog(Skip(client))

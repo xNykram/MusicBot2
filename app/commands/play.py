@@ -1,16 +1,16 @@
 from discord.ext import commands
+from discord.ext.commands import Bot
+
 from app.core.player import mp, play_song
 from app.core.search import search
 
 
 class Play(commands.Cog):
-    def __init__(self, client):
+    def __init__(self, client: Bot):
         self.client = client
 
-    @commands.command(
-        help="Plays a song or adds it to the queue if a song is already playing."
-    )
-    async def play(self, ctx: commands.Context, *, query=None):
+    @commands.command(help="Plays a song or adds it to the queue if a song is already playing.")
+    async def play(self, ctx: commands.Context, *, query: str = None) -> commands.Context:
         if not ctx.message.author.voice:
             return await ctx.send("You are not on any voice channel.")
         if not query:
@@ -32,12 +32,10 @@ class Play(commands.Cog):
             await ctx.send(f"Added {new_song.name} to queue!")
 
         else:
-            await ctx.send(
-                f"Playing {new_song.name} ({new_song.url}) ({new_song.duration})"
-            )
+            await ctx.send(f"Playing {new_song.name} ({new_song.url}) ({new_song.duration})")
             queue.append(new_song)
             play_song(guild_id=ctx.guild.id, voice=voice_client)
 
 
-async def setup(client):
+async def setup(client: Bot) -> None:
     await client.add_cog(Play(client))

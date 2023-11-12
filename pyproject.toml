@@ -5,7 +5,7 @@ description = "A discord music bot written in Python."
 authors = ["xNykram"]
 
 [tool.poetry.dependencies]
-python = "3.12"
+python = "3.11.6"
 youtube_search = "2.1.2"
 pydantic = "2.4.2"
 yt-dlp = "2023.10.13"
@@ -26,23 +26,43 @@ pytest-cov = "4.1.0"
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.black]
-line-length = 88
-include = '\.pyi?$'
+[tool.ruff]
+line-length = 99
+target-version = "py38"
+fix = true
 
-[tool.isort]
-atomic = true
-profile = "black"
-line_length = 88
-skip_gitignore = true
-
-[tool.pylint.messages-control]
-disable = [
-    "C0114","C0115","C0116","E1101","W0613","W0622"
+select = [
+  "E",
+  "F",
+  "B",
+  "I",
+  "RUF100",
+  "PGH004",
+  "UP",
 ]
 
+[tool.ruff.isort]
+combine-as-imports = true
+extra-standard-library = ["typing_extensions"]
+
+[tool.check-manifest]
+ignore = ["**/.readthedocs.yaml"]
+
 [tool.pytest.ini_options]
-addopts = "--cov=. --cov-report=html:coverage-report"
+minversion = "6.0.0"
+testpaths = ["test"]
+python_files = 'test*.py'
+xfail_strict = true
 
 [tool.coverage.run]
-omit = ["__init__.py"]
+branch = true
+parallel = true
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+omit = ['test/*']
+
+[tool.mypy] # todo
+ignore_missing_imports = true
+ignore_errors = true
