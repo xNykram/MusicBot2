@@ -24,7 +24,7 @@
 - Simple to use
 - Easy installation
 - Lightweight
-
+- Hosted on Raspberry Pi 4
 ### Commands:
 
 Rhenus Bot supports a range of commands that are intuitive and easy to use. Here's a quick rundown of the available commands:
