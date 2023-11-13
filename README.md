@@ -9,7 +9,7 @@
 ![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white)
 
 
-<img src="https://i.ibb.co/4JZ8GZb/logo.jpg" alt="Logo" width="120" height="120">
+<img src="https://i.ibb.co/61Lg66D/logo.jpg" alt="Logo" width="120" height="120">
 
 <hr>
 
