@@ -1,8 +1,9 @@
 .env
-.vscode
 .mypy_cache
 logs
 __pycache__
 .coverage
 .ruff_cache
 .pytest_cache
+.poetry.lock
+coverage-report

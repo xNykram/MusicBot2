@@ -45,23 +45,20 @@ select = [
 combine-as-imports = true
 extra-standard-library = ["typing_extensions"]
 
-[tool.check-manifest]
-ignore = ["**/.readthedocs.yaml"]
-
 [tool.pytest.ini_options]
 minversion = "6.0.0"
-testpaths = ["test"]
 python_files = 'test*.py'
 xfail_strict = true
+addopts = "--cov=. --cov-report=html:coverage-report -p no:warnings"
 
 [tool.coverage.run]
 branch = true
 parallel = true
+omit = ["app/tests/*", "__init__.py", "main.py", "leave.py", "join.py", "skip.py", "volume.py", "play.py", "player.py","stop.py", "queue.py"]
 
 [tool.coverage.report]
 show_missing = true
-skip_covered = true
-omit = ['test/*']
+fail_under = 75
 
 [tool.mypy] # todo
 ignore_missing_imports = true

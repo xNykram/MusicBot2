@@ -12,7 +12,7 @@ intents = Intents.all()
 @pytest_asyncio.fixture
 async def bot(event_loop) -> Bot:
     bot = Bot(intents=intents, command_prefix="!", loop=event_loop, help_command=None)
-    for filename in os.listdir("/app/app/commands"):
+    for filename in os.listdir("app/commands"):
         if filename.endswith(".py"):
             await bot.load_extension(f"app.commands.{filename[:-3]}")
     await bot._async_setup_hook()
