@@ -1,14 +1,21 @@
-from app.main import client
+from discord.ext import commands
+from discord.ext.commands import Bot
+
+from app.core.player import mp
 
 
-@client.command(name="clear", description="Clears the current queue of songs.")
-async def clear(ctx):
-    queue_list = client.get_queue(ctx.guild.id)
-    if queue_list:
-        client.queue_map.clear()
-        return await ctx.channel.send("The queue has been cleared.")
-    return await ctx.channel.send("There is nothing to clear.")
+class Clear(commands.Cog):
+    def __init__(self, client: Bot):
+        self.client = client
+
+    @commands.command(help="Clears the current queue of songs.")
+    async def clear(self, ctx: commands.Context):
+        queue_list = mp.return_queue(ctx.guild.id)
+        if queue_list:
+            mp.queue.clear()
+            return await ctx.channel.send("The queue has been cleared.")
+        return await ctx.channel.send("There is nothing to clear.")
 
 
-async def setup(bot):
-    bot.add_command(clear)
+async def setup(client: Bot) -> None:
+    await client.add_cog(Clear(client))

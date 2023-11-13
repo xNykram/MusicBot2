@@ -7,9 +7,9 @@ services:
       context: .
       dockerfile: Dockerfile
       target: development
-    command: ["python3", "app/main.py"]
-    volumes: 
-    - ./logs:/app/logs
+    command: ["python3", "/app/app/main.py"]
+    volumes:
+    - ./app:/app/app
     env_file:
       - .env
     ports:
