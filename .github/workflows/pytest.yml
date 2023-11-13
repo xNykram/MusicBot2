@@ -2,8 +2,8 @@ name: pytest
 
 on:
   pull_request:
-  push:
-    branches: [integration]
+    branches:
+      - integration
 
 jobs:
   pytest:
