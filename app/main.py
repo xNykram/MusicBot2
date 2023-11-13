@@ -13,7 +13,6 @@ if os.environ.get("BOT_TOKEN") is None:
 
 
 intents = discord.Intents.default()
-intents.members = True
 intents.message_content = True
 client = commands.Bot(command_prefix=config.BOT_PREFIX, intents=intents, help_command=None)
 
