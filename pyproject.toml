@@ -5,7 +5,7 @@ description = "A discord music bot written in Python."
 authors = ["xNykram"]
 
 [tool.poetry.dependencies]
-python = "3.12"
+python = "3.11.6"
 youtube_search = "2.1.2"
 pydantic = "2.4.2"
 yt-dlp = "2023.10.13"
@@ -17,23 +17,49 @@ pydantic-settings = "2.0.3"
 aiohttp = "3.9.0b0"
 
 [tool.poetry.dev-dependencies]
-debugpy = "1.8.0"
+dpytest = "0.7.0"
+pytest = "7.4.3"
+pytest-asyncio = "0.21.1"
+pytest-cov = "4.1.0"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.black]
-line-length = 88
-include = '\.pyi?$'
+[tool.ruff]
+line-length = 99
+target-version = "py38"
+fix = true
 
-[tool.isort]
-atomic = true
-profile = "black"
-line_length = 88
-skip_gitignore = true
-
-[tool.pylint.messages-control]
-disable = [
-    "C0114","C0115","C0116","E1101","W0613","W0622"
+select = [
+  "E",
+  "F",
+  "B",
+  "I",
+  "RUF100",
+  "PGH004",
+  "UP",
 ]
+
+[tool.ruff.isort]
+combine-as-imports = true
+extra-standard-library = ["typing_extensions"]
+
+[tool.pytest.ini_options]
+minversion = "6.0.0"
+python_files = 'test*.py'
+xfail_strict = true
+addopts = "--cov=. --cov-report=html:coverage-report -p no:warnings"
+
+[tool.coverage.run]
+branch = true
+parallel = true
+omit = ["app/tests/*", "__init__.py", "main.py", "leave.py", "join.py", "skip.py", "volume.py", "play.py", "player.py","stop.py", "queue.py"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 75
+
+[tool.mypy] # todo
+ignore_missing_imports = true
+ignore_errors = true

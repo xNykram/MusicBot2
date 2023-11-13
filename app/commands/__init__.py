@@ -1,2 +1,2 @@
-async def setup(_):
+async def setup(_) -> None:
     pass
