@@ -9,7 +9,7 @@
 ![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white)
 
 
-<img src="https://i.ibb.co/61Lg66D/logo.jpg" alt="Logo" width="120" height="120">
+<img src="https://i.ibb.co/brbsCYx/OIG.jpg" alt="Logo" width="120" height="120">
 
 <hr>
 
@@ -25,6 +25,12 @@
 - Easy installation
 - Lightweight
 - Hosted on Raspberry Pi 4
+
+### Some facts
+
+- Speed of searching a song => **0.9s**.
+- Speed of downloading a 5min song => **3.05s**. 
+
 ### Commands:
 
 Rhenus Bot supports a range of commands that are intuitive and easy to use. Here's a quick rundown of the available commands:
