@@ -1,4 +1,4 @@
-FROM python:3.11.6-slim AS development
+FROM python:3.12.2-slim AS development
 
 ENV APP_ENV=dev \
   PYTHONFAULTHANDLER=1 \

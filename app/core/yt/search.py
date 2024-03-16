@@ -1,18 +1,24 @@
 from ast import literal_eval
-
-from youtube_search import YoutubeSearch as SearchEngine
+from app.core.utils import millis_converter
+from ytsearch import YTSearch as SearchEngine
 
 from app.schemas.song import Song
 
 
 def yt_search(query: str) -> dict | int:
-    result = SearchEngine(query, max_results=1).videos
+    search_engine = SearchEngine()
+    if "https://" in query:
+        result = search_engine.search_by_url(query)
+        result.update({'duration': millis_converter(int(result.get('duration')))})
+    else:
+        result = search_engine.search_by_term(query, max_results=1)
     if len(result) == 0:
         return 0
-    video = literal_eval(str(result[0]))
-    return Song(
-        id=video["id"],
-        name=video["title"],
-        duration=video["duration"],
-        url="https://www.youtube.com/watch?v=" + video["id"],
+    
+    target_song = Song(
+        id=result.get('id'),
+        name=result.get("title"),
+        duration=result.get("duration"),
+        url="https://www.youtube.com/watch?v=" + result.get("id"),
     )
+    return target_song
