@@ -9,9 +9,10 @@ def yt_search(query: str) -> dict | int:
     search_engine = SearchEngine()
     if "https://" in query:
         result = search_engine.search_by_url(query)
+        print(result)
         result.update({'duration': millis_converter(int(result.get('duration')))})
     else:
-        result = search_engine.search_by_term(query, max_results=1)
+        result = search_engine.search_by_term(query, max_results=1)[0]
     if len(result) == 0:
         return 0
     
