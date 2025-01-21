@@ -14,7 +14,7 @@ def yt_search(query: str) -> dict | int:
         result = search_engine.search_by_term(query, max_results=1)
     if len(result) == 0:
         return 0
-    
+    result = result[0]
     target_song = Song(
         id=result.get('id'),
         name=result.get("title"),
